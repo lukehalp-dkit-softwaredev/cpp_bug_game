@@ -11,9 +11,9 @@ public:
     Crawler(int id, const pair<int, int> &position, Direction direction, int size);
     Crawler(Crawler &crawler);
     void move() override;
+    string toString() override;
     string displayLife() override;
     string displayName() override;
-    string toString() override;
 };
 
 

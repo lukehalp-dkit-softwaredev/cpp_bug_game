@@ -13,6 +13,10 @@ Hopper::Hopper(Hopper &hopper) : Bug(hopper) {
     this->hopLength = hopper.hopLength;
 }
 
+int Hopper::getHopLength() const {
+    return hopLength;
+}
+
 void Hopper::move() {
     if(!alive) {
         return;
@@ -49,10 +53,6 @@ void Hopper::move() {
         position.second = 9;
     }
     path.push_back(position);
-}
-
-int Hopper::getHopLength() const {
-    return hopLength;
 }
 
 string Hopper::toString() {

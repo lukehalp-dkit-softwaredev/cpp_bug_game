@@ -20,7 +20,6 @@ void initializeBoard();
 void load();
 int parseLine(const string& str);
 void displayBugs();
-string dirString(Direction direction);
 void findBug();
 void tapBoard();
 void displayLife();
@@ -28,7 +27,6 @@ void displayCells();
 void save();
 
 vector<Bug*> bugs;
-int bugId = 1;
 
 int main() {
     menu();
@@ -108,17 +106,11 @@ void initializeBoard() {
 void load() {
     string line;
     ifstream fin("bugs.txt");
-    int max = 0;
-    int id = 0;
     if (fin.good()) {
         while (getline(fin, line)) {
-            id = parseLine(line);
-            if(id > max) {
-                max = id; // keep track of used ids
-            }
+            parseLine(line);
         }
         fin.close();
-        bugId = id + 1;
     }
     else {
         cout << "[Error] Unable to load bugs." << endl;
@@ -126,7 +118,7 @@ void load() {
 }
 
 /*
- * Parses and individual line of students.txt .
+ * Parses and individual line of bugs.txt .
  */
 int parseLine(const string& str) {
     try {
@@ -175,10 +167,10 @@ int parseLine(const string& str) {
             string hopStr;
             getline(input, hopStr, ';');
             int hopLength = stoi(hopStr);
-            Hopper* hopper = new Hopper(id, position, dir, size, hopLength);
+            auto* hopper = new Hopper(id, position, dir, size, hopLength);
             bugs.push_back(hopper);
         } else if (typeStr == "C") {
-            Crawler* crawler = new Crawler(id, position, dir, size);
+            auto* crawler = new Crawler(id, position, dir, size);
             bugs.push_back(crawler);
         }
         return id;

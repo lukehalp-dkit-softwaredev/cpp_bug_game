@@ -28,6 +28,9 @@ protected:
     bool alive;
     vector<pair<int, int>> path;
 public:
+    static string dirString(Direction direction);
+    static Direction intToDir(int dirNum);
+
     Bug(int id, const pair<int, int> &position, Direction direction, int size);
     Bug(Bug &bug);
     int getId() const;
@@ -36,16 +39,13 @@ public:
     int getSize() const;
     bool isAlive() const;
     const vector<pair<int, int>>& getPath() const;
+    bool isWayBlocked();
     virtual void move() = 0;
+    void eat(Bug &bug);
+    void kill();
     virtual string toString() = 0;
     virtual string displayLife() = 0;
     virtual string displayName() = 0;
-    string dirString(Direction direction);
-    Direction intToDir(int dirNum);
-    bool isWayBlocked();
-    void eat(Bug &bug);
-    void kill();
-
     virtual ~Bug();
 };
 
