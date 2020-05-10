@@ -10,8 +10,10 @@ class Crawler: public Bug {
 public:
     Crawler(int id, const pair<int, int> &position, Direction direction, int size);
     Crawler(Crawler &crawler);
-    string toString() override;
     void move() override;
+    string displayLife() override;
+    string displayName() override;
+    string toString() override;
 };
 
 

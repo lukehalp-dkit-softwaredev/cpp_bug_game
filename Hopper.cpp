@@ -14,6 +14,9 @@ Hopper::Hopper(Hopper &hopper) : Bug(hopper) {
 }
 
 void Hopper::move() {
+    if(!alive) {
+        return;
+    }
     if(isWayBlocked()) {
         int seed = chrono::system_clock::now().time_since_epoch().count();
         default_random_engine generator(seed);
@@ -57,4 +60,17 @@ string Hopper::toString() {
            + "\t(" + to_string(position.first) + "," + to_string(position.second) + ")\t"
            + to_string(size) + "\t\t" + dirString(direction) + "\t" + (alive ? "Alive" : "Dead")
            + "\t" + to_string(hopLength);
+}
+
+string Hopper::displayLife() {
+    string life = to_string(id) + "\tHopper\t";
+    for(pair<int, int> position : path) {
+        life += "(" + to_string(position.first) + "," + to_string(position.second) + "),";
+    }
+    life += (alive ? "Alive" : "Dead");
+    return life;
+}
+
+string Hopper::displayName() {
+    return to_string(id) + " Hopper";
 }

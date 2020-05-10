@@ -38,9 +38,13 @@ public:
     const vector<pair<int, int>>& getPath() const;
     virtual void move() = 0;
     virtual string toString() = 0;
+    virtual string displayLife() = 0;
+    virtual string displayName() = 0;
     string dirString(Direction direction);
     Direction intToDir(int dirNum);
     bool isWayBlocked();
+    void eat(Bug &bug);
+    void kill();
 
     virtual ~Bug();
 };

@@ -103,3 +103,12 @@ Direction Bug::intToDir(int dirNum) {
         }
     }
 }
+
+void Bug::eat(Bug &bug) {
+    this->size += bug.size;
+    bug.kill();
+}
+
+void Bug::kill() {
+    this->alive = false;
+}

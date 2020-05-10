@@ -25,15 +25,14 @@ void findBug();
 void tapBoard();
 void displayLife();
 void displayCells();
-
-//void save();
+void save();
 
 vector<Bug*> bugs;
 int bugId = 1;
 
 int main() {
     menu();
-//    save();
+    save();
     cout << "Goodbye." << endl;
     return 0;
 }
@@ -97,129 +96,6 @@ void printMenu() {
     cout << "6. Display Cells" << endl;
     cout << "0. Quit" << endl;
 }
-
-//void addStudent() {
-//    cout << "Student Title: ";
-//    string title;
-//    getline(cin, title);
-//    cout << "Student Name: ";
-//    string name;
-//    getline(cin, name);
-//    cout << "Student Course: ";
-//    string course;
-//    getline(cin, course);
-//    string grade;
-//    int grades[4];
-//    for(int i=0;i<4;i++) {
-//        grades[i] = -1;
-//        while(grades[i] == -1) {
-//            cout << "Student Grade " << i+1 << ": ";
-//            getline(cin, grade);
-//            try {
-//                grades[i] = stoi(grade);
-//                if(grades[i] < 0 || grades[i] > 100) {
-//                    cout << "Invalid grade" << endl;
-//                    grades[i] = -1;
-//                }
-//            } catch (invalid_argument &e) {
-//                cout << "Invalid grade" << endl;
-//            }
-//        }
-//    }
-//    Student student(studentId, title, name, grades, course);
-//    // Check for duplicate
-//    if(find(students.begin(), students.end(), student) != students.end()) {
-//        cout << "Student already in database." << endl;
-//        return;
-//    }
-//    students.push_back(student);
-//    cout << "Added student" << endl;
-//}
-//
-//void showStudentsCourse() {
-//    cout << "Course Name: ";
-//    string course;
-//    getline(cin, course);
-//    cout << "Sort by:\n1. Student Name\n2. Student Grade\n>> ";
-//    string sort;
-//    int num;
-//    getline(cin, sort);
-//    try {
-//        num = stoi(sort);
-//        if(num < 1 || num > 2) {
-//            cout << "Invalid option, sorting by Name" << endl;
-//            num = 1;
-//        }
-//    } catch (invalid_argument &e) {
-//        cout << "Invalid option, sorting by Name" << endl;
-//        num = 1;
-//    }
-//    if(num == 1) {
-//        showStudentsCourseByName(course);
-//    } else {
-//        showStudentsCourseByGrade(course);
-//    }
-//}
-//
-///*
-// * Sorting functions for students.
-// */
-//bool sortById(Student &a, Student &b) {
-//    return a.getId() < b.getId();
-//}
-//
-//bool sortByName(Student &a, Student &b) {
-//    return a.getName() < b.getName();
-//}
-//
-//bool sortByGrade(Student &a, Student &b) {
-//    return a.getAverage() < b.getAverage();
-//}
-//
-//void showStudentsCourseByName(string &course) {
-//    sort(students.begin(), students.end(), sortByName);
-//    for(const Student& student: students) {
-//        if(student.getCourse() == course) {
-//            cout << student << endl;
-//        }
-//    }
-//}
-//
-//void showStudentsCourseByGrade(string &course) {
-//    sort(students.begin(), students.end(), sortByGrade);
-//    for(const Student& student: students) {
-//        if(student.getCourse() == course) {
-//            cout << student << endl;
-//        }
-//    }
-//}
-//
-//void findStudent() {
-//    cout << "Student ID: ";
-//    string id;
-//    int num;
-//    getline(cin, id);
-//    try {
-//        num = stoi(id);
-//        sort(students.begin(), students.end(), sortById);
-//        for(const Student& student: students) {
-//            if(student.getId() == num) {
-//                cout << student << endl;
-//            }
-//        }
-//    } catch (invalid_argument &e) {
-//        cout << "Invalid ID" << endl;
-//    }
-//}
-//
-//void showFailingStudents() {
-//    sort(students.begin(), students.end(), sortById);
-//    for(Student &student: students) {
-//        if(student.getAverage() < 40) {
-//            cout << student << endl;
-//        }
-//    }
-//}
 
 void initializeBoard() {
     load();
@@ -348,28 +224,53 @@ void tapBoard() {
     for(Bug* bug: bugs) {
         bug->move();
     }
+    for(int i=0;i<bugs.size();i++) {
+        for(int j=i;j<bugs.size();j++) {
+            if(bugs[i]->getPosition() == bugs[j]->getPosition()) {
+                if(bugs[i]->getSize() > bugs[j]->getSize() && bugs[i]->isAlive() && bugs[j]->isAlive()) {
+                    bugs[i]->eat(*bugs[j]);
+                } else if(bugs[j]->getSize() > bugs[i]->getSize() && bugs[i]->isAlive() && bugs[j]->isAlive()) {
+                    bugs[j]->eat(*bugs[i]);
+                }
+            }
+        }
+    }
 }
 
 void displayLife() {
-
+    cout <<"ID\tType\tPath" << endl;
+    for(Bug* bug: bugs) {
+        cout << bug->displayLife() << endl;
+    }
 }
 
 void displayCells() {
-
+    // This is bad code, too many loops. It works tho!
+    for(int x=0;x<=9;x++) {
+        for(int y=0;y<=9;y++) {
+            cout << "(" << x << "," << y << "):\t";
+            for(Bug* bug : bugs) {
+                if(bug->getPosition().first == x && bug->getPosition().second == y) {
+                    cout << bug->displayName() << ",\t";
+                }
+            }
+            cout << endl;
+        }
+    }
 }
 
-///*
-// * Saves students to the file students.txt.
-// */
-//void save() {
-//    sort(students.begin(), students.end(), sortById); // sort by id before saving
-//    ofstream fout("students.txt");
-//    if (fout.good()) {
-//        for(Student student : students) {
-//            fout << student.save();
-//        }
-//        fout.close();
-//    } else {
-//        cout << "[Error] Unable to save students to file" << endl;
-//    }
-//}
+/*
+ * Saves bugs life to the file bugslife.txt.
+ */
+void save() {
+    ofstream fout("bugslife.txt");
+    if (fout.good()) {
+        fout <<"ID\tType\tPath" << endl;
+        for(Bug* bug: bugs) {
+            fout << bug->displayLife() << endl;
+        }
+        fout.close();
+    } else {
+        cout << "[Error] Unable to save bugs to file" << endl;
+    }
+}

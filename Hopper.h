@@ -14,6 +14,8 @@ public:
     Hopper(Hopper &hopper);
     int getHopLength() const;
     void move() override;
+    string displayLife() override;
+    string displayName() override;
     string toString() override;
 };
 
