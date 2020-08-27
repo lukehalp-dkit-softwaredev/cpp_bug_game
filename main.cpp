@@ -80,6 +80,8 @@ void menu() {
             }
         } catch (invalid_argument &e) {
             cout << "Invalid option" << endl;
+        } catch (out_of_range &e) {
+            cout << "Invalid option" << endl;
         }
     }
 }
@@ -138,28 +140,7 @@ int parseLine(const string& str) {
         string dirStr;
         getline(input, dirStr, ';');
         int dirInt = stoi(dirStr);
-        Direction dir;
-        switch(dirInt) {
-            case 1: {
-                dir = Direction::NORTH;
-                break;
-            }
-            case 2: {
-                dir = Direction::EAST;
-                break;
-            }
-            case 3: {
-                dir = Direction::SOUTH;
-                break;
-            }
-            case 4: {
-                dir = Direction::WEST;
-                break;
-            }
-            default: {
-                throw invalid_argument("Invalid direction '"+to_string(dirInt)+"'.");
-            }
-        }
+        Direction dir = Bug::intToDir(dirInt);
         string sizeStr;
         getline(input, sizeStr, ';');
         int size = stoi(sizeStr);
@@ -204,6 +185,7 @@ void findBug() {
             if(bug->getId() == num) {
                 cout << "ID\tType\tPos\t\tSize\tDir\t\tStatus\tHop" << endl;
                 cout << bug->toString() << endl;
+                return;
             }
         }
         cout << "Bug not found." << endl;
@@ -248,6 +230,28 @@ void displayCells() {
             }
             cout << endl;
         }
+    }
+    // Grid style
+    cout << "Grid:" << endl;
+    cout << "-----------------------------------------" << endl;
+    for(int y=0;y<=9;y++) {
+        cout << "|";
+        for(int x=0;x<=9;x++) {
+            vector<Bug*> bugsHere;
+            for(Bug* bug : bugs) {
+                if(bug->getPosition().first == x && bug->getPosition().second == y) {
+                    bugsHere.push_back(bug);
+                }
+            }
+            if(!bugsHere.empty()) {
+                for (Bug *bug: bugsHere) {
+                    cout << bug->getGridMarker();
+                }
+            }
+            cout << "\t|";
+        }
+        cout << endl;
+        cout << "-----------------------------------------" << endl;
     }
 }
 

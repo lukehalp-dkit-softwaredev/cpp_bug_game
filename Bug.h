@@ -46,6 +46,7 @@ public:
     virtual string toString() = 0;
     virtual string displayLife() = 0;
     virtual string displayName() = 0;
+    virtual string getGridMarker() = 0;
     virtual ~Bug();
 };
 

@@ -1,5 +1,5 @@
 //
-// Created by wildfire on 26/04/2020.
+// Created by Luke Halpenny on 26/04/2020.
 //
 
 #ifndef CA4_CRAWLER_H
@@ -14,6 +14,7 @@ public:
     string toString() override;
     string displayLife() override;
     string displayName() override;
+    string getGridMarker() override;
 };
 
 

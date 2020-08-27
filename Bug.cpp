@@ -1,5 +1,5 @@
 //
-// Created by wildfire on 26/04/2020.
+// Created by Luke Halpenny on 26/04/2020.
 //
 
 #include "Bug.h"
@@ -39,7 +39,7 @@ Direction Bug::intToDir(int dirNum) {
             return Direction::WEST;
         }
         default: {
-            throw invalid_argument("Invalid direction");
+            throw invalid_argument("Invalid direction: "+to_string(dirNum));
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-// Created by wildfire on 26/04/2020.
+// Created by Luke Halpenny on 26/04/2020.
 //
 
 #include "Crawler.h"
@@ -56,4 +56,8 @@ string Crawler::displayLife() {
 
 string Crawler::displayName() {
     return to_string(id) + " Crawler";
+}
+
+string Crawler::getGridMarker() {
+    return alive ? "C" : "X";
 }

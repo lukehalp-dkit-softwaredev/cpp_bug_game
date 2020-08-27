@@ -1,5 +1,5 @@
 //
-// Created by wildfire on 09/05/2020.
+// Created by Luke Halpenny on 09/05/2020.
 //
 
 #ifndef CA4_HOPPER_H
@@ -17,6 +17,7 @@ public:
     string toString() override;
     string displayLife() override;
     string displayName() override;
+    string getGridMarker() override;
 };
 
 

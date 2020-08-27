@@ -1,5 +1,5 @@
 //
-// Created by wildfire on 09/05/2020.
+// Created by Luke Halpenny on 09/05/2020.
 //
 
 #include "Hopper.h"
@@ -73,4 +73,8 @@ string Hopper::displayLife() {
 
 string Hopper::displayName() {
     return to_string(id) + " Hopper";
+}
+
+string Hopper::getGridMarker() {
+    return alive ? "H" : "X";
 }
